@@ -23,8 +23,7 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
       return reply.status(409).send({ message: err.message });
     }
 
-    // TODO: Handle errors properly
-    return reply.status(500).send({ message: "Internal server error" });
+    throw err;
   }
 
   return reply.status(201).send({ message: "User created" });
