@@ -14,12 +14,13 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
-  email         String   @unique
+  email         String    @unique
   password_hash String
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  checkins      Checkin[]
 
   @@map("users")
 }
@@ -28,17 +29,22 @@ model Checkin {
   id           String    @id @default(uuid())
   created_at   DateTime  @default(now())
   validated_at DateTime?
+  user_id      String
+  gym_id       String
+  user         User      @relation(fields: [user_id], references: [id])
+  gym          Gym       @relation(fields: [gym_id], references: [id])
 
   @@map("checkins")
 }
 
 model Gym {
-  id          String  @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   description String?
   phone       String?
   latitude    Decimal
   longitude   Decimal
+  checkins    Checkin[]
 
   @@map("gyms")
 }
