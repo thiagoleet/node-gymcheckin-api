@@ -1,19 +1,19 @@
-import { UsersRepository } from "@/repositories/users.repository";
-import { hash } from "bcryptjs";
-import { UserAlreadyExistsError } from "./errors/user-alredy-exists.error";
 import { User } from "@prisma/client";
+import { hash } from "bcryptjs";
+import { UsersRepository } from "@/repositories/users.repository";
+import { UserAlreadyExistsError } from "../errors";
 
 const SALT_ROUNDS = 6;
 
-interface RegisterUseCaseProps {
+type RegisterUseCaseProps = {
   name: string;
   email: string;
   password: string;
-}
+};
 
-interface RegisterUseCaseResponse {
+type RegisterUseCaseResponse = {
   user: User;
-}
+};
 
 export class RegisterUseCase {
   constructor(private repository: UsersRepository) {}

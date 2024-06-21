@@ -1,21 +1,27 @@
-import { describe, expect, it } from "vitest";
-import { RegisterUseCase } from "./register";
-import bcrypt from "bcryptjs";
+import { describe, expect, it, beforeEach } from "vitest";
+import { compare } from "bcryptjs";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users.repository";
-import { UserAlreadyExistsError } from "./errors/user-alredy-exists.error";
+import { UserAlreadyExistsError } from "../errors/user-alredy-exists.error";
+import { RegisterUseCase } from "./register";
+import { UsersRepository } from "@/repositories/users.repository";
 
 describe("Register Use Case", () => {
-  it("should hash user password upon registration", async () => {
-    const usersRepository = new InMemoryUsersRepository();
-    const registeruseCase = new RegisterUseCase(usersRepository);
+  let usersRepository: UsersRepository;
+  let sut: RegisterUseCase;
 
-    const { user } = await registeruseCase.execute({
+  beforeEach(() => {
+    usersRepository = new InMemoryUsersRepository();
+    sut = new RegisterUseCase(usersRepository);
+  });
+
+  it("should hash user password upon registration", async () => {
+    const { user } = await sut.execute({
       name: "John Doe",
       email: "johndoe@email.com",
       password: "123456",
     });
 
-    const isPasswordCorrectlyHashed = await bcrypt.compare(
+    const isPasswordCorrectlyHashed = await compare(
       "123456",
       user.password_hash
     );
@@ -24,19 +30,16 @@ describe("Register Use Case", () => {
   });
 
   it("should not allow registration with the same email", async () => {
-    const usersRepository = new InMemoryUsersRepository();
-    const registeruseCase = new RegisterUseCase(usersRepository);
-
     const email = "johndoe@email.com";
 
-    await registeruseCase.execute({
+    await sut.execute({
       name: "John Doe",
       email,
       password: "123456",
     });
 
     await expect(() =>
-      registeruseCase.execute({
+      sut.execute({
         name: "John Doe",
         email,
         password: "123456",
@@ -45,10 +48,7 @@ describe("Register Use Case", () => {
   });
 
   it("shoudl be able to register", async () => {
-    const usersRepository = new InMemoryUsersRepository();
-    const registeruseCase = new RegisterUseCase(usersRepository);
-
-    const { user } = await registeruseCase.execute({
+    const { user } = await sut.execute({
       name: "John Doe",
       email: "johndoe@email.com",
       password: "123456",
