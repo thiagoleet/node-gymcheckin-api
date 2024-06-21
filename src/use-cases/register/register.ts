@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import { hash } from "bcryptjs";
 import { UsersRepository } from "@/repositories/users.repository";
-import { UserAlreadyExistsError } from "../errors";
+import { UserAlreadyExistsError } from "../../errors";
 
 const SALT_ROUNDS = 6;
 
