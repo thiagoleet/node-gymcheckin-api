@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { compare } from "bcryptjs";
-import { UsersRepository } from "@/repositories/users.repository";
+import { UsersRepository } from "@/repositories";
 import { InvalidCredentialsError } from "@/errors";
 
 type AuthenticateUseCaseProps = {

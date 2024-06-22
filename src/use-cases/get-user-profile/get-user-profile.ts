@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { UsersRepository } from "@/repositories/users.repository";
+import { UsersRepository } from "@/repositories";
 import { ResourceNotFoundError } from "@/errors";
 
 type GetUserProfileUseCaseProps = {

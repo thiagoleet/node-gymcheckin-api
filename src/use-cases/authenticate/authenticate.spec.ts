@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach } from "vitest";
 import { hash } from "bcryptjs";
-import { UsersRepository } from "@/repositories/users.repository";
+import { UsersRepository } from "@/repositories";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users.repository";
 import { InvalidCredentialsError } from "@/errors/";
 import { AuthenticateUseCase } from "./authenticate";
