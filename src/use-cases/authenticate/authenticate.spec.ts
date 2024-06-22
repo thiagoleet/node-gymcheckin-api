@@ -6,12 +6,12 @@ import { InvalidCredentialsError } from "@/errors/";
 import { AuthenticateUseCase } from "./authenticate";
 
 describe("Authenticate Use Case", () => {
-  let usersRepository: UsersRepository;
+  let repository: UsersRepository;
   let sut: AuthenticateUseCase;
 
   beforeEach(() => {
-    usersRepository = new InMemoryUsersRepository();
-    sut = new AuthenticateUseCase(usersRepository);
+    repository = new InMemoryUsersRepository();
+    sut = new AuthenticateUseCase(repository);
   });
 
   it("should be able to authenticate", async () => {
@@ -23,7 +23,7 @@ describe("Authenticate Use Case", () => {
     const password_hash = await hash(password, 6);
 
     // Creating a user
-    await usersRepository.create({
+    await repository.create({
       name,
       email,
       password_hash,
@@ -41,7 +41,7 @@ describe("Authenticate Use Case", () => {
     const email = "johndoe@email.com";
     const password = "123456";
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         email,
         password,
@@ -59,13 +59,13 @@ describe("Authenticate Use Case", () => {
     const password_hash = await hash(password, 6);
 
     // Creating a user
-    await usersRepository.create({
+    await repository.create({
       name,
       email,
       password_hash,
     });
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         email,
         password: wrongPassword,

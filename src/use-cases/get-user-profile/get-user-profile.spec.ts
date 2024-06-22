@@ -6,12 +6,12 @@ import { ResourceNotFoundError } from "@/errors/";
 import { GetUserProfileUseCase } from "./get-user-profile";
 
 describe("Get User Profile Use Case", () => {
-  let usersRepository: UsersRepository;
+  let repository: UsersRepository;
   let sut: GetUserProfileUseCase;
 
   beforeEach(() => {
-    usersRepository = new InMemoryUsersRepository();
-    sut = new GetUserProfileUseCase(usersRepository);
+    repository = new InMemoryUsersRepository();
+    sut = new GetUserProfileUseCase(repository);
   });
 
   it("should be able to get user profile", async () => {
@@ -23,7 +23,7 @@ describe("Get User Profile Use Case", () => {
     const password_hash = await hash(password, 6);
 
     // Creating a user
-    const createdUser = await usersRepository.create({
+    const createdUser = await repository.create({
       name,
       email,
       password_hash,
@@ -39,7 +39,7 @@ describe("Get User Profile Use Case", () => {
   it("should not be able to get user profile with wrong user id", async () => {
     const userId = "wrong-user-id";
 
-    expect(() => sut.execute({ userId })).rejects.toBeInstanceOf(
+    await expect(() => sut.execute({ userId })).rejects.toBeInstanceOf(
       ResourceNotFoundError
     );
   });
