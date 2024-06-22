@@ -3,10 +3,10 @@ import { UsersRepository } from "../users.repository";
 import { randomUUID } from "node:crypto";
 
 export class InMemoryUsersRepository implements UsersRepository {
-  private users: User[];
+  private items: User[];
 
   constructor() {
-    this.users = [];
+    this.items = [];
   }
   async create(data: Prisma.UserCreateInput) {
     const user = {
@@ -17,15 +17,15 @@ export class InMemoryUsersRepository implements UsersRepository {
       created_at: new Date(),
       updated_at: new Date(),
     };
-    this.users.push(user);
+    this.items.push(user);
 
     return user;
   }
   async findByEmail(email: string): Promise<User | null> {
-    return this.users.find((user) => user.email === email) || null;
+    return this.items.find((user) => user.email === email) || null;
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.users.find((user) => user.id === id) || null;
+    return this.items.find((user) => user.id === id) || null;
   }
 }
