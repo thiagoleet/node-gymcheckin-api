@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from "@/errors";
+import { MaxDistanceError, ResourceNotFoundError } from "@/errors";
 import { CheckInsRepository, GymsRepository } from "@/repositories";
 import { getDistanceBetweenCoordinates } from "@/utils/getDistanceBetweenCoordinates";
 import { Checkin } from "@prisma/client";
@@ -40,7 +40,7 @@ export class CheckInUseCase {
     );
 
     if (distance > MAX_DISTANCE_IN_KILOMETERS) {
-      throw new Error("User is too far from the gym");
+      throw new MaxDistanceError("User is too far from the gym");
     }
 
     const checkIn = await this.checkInsRepository.create({

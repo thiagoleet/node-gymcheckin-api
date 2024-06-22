@@ -2,6 +2,7 @@ import { Checkin, Prisma } from "@prisma/client";
 import dayjs from "dayjs";
 import { randomUUID } from "node:crypto";
 import { CheckInsRepository } from "../checkins.repository";
+import { MaxNumberOfCheckInsError } from "@/errors";
 
 export class InMemoryCheckinsRepository implements CheckInsRepository {
   private items: Checkin[];
@@ -17,7 +18,7 @@ export class InMemoryCheckinsRepository implements CheckInsRepository {
     );
 
     if (checkInOnSameDate) {
-      throw new Error("User already checked in today");
+      throw new MaxNumberOfCheckInsError("User already checked in today");
     }
 
     const checkIn: Checkin = {
