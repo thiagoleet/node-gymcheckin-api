@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
 import { CheckInsRepository } from "@/repositories";
-import { InMemoryCheckinsRepository } from "@/repositories/in-memory/in-memory-checkins.repository";
+import { InMemoryCheckinsRepository } from "@/repositories/in-memory";
 import { FetchMemberCheckInsHistoryUseCase } from "./fetch-member-check-ins-history";
 
 describe("Fetch Member Check-ins History UseCase", () => {

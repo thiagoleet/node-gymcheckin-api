@@ -1,7 +1,7 @@
 import { GymsRepository } from "@/repositories";
 import { describe, expect, it, beforeEach } from "vitest";
 import { SearchGymsUseCase } from "./search-gyms";
-import { InMemoryGymsRepository } from "@/repositories/in-memory/in-memory-gyms.repository";
+import { InMemoryGymsRepository } from "@/repositories/in-memory";
 
 describe("Search Gyms Use Case", () => {
   let repository: GymsRepository;
