@@ -3,11 +3,9 @@ import { CheckInsRepository } from "@/repositories";
 import { InMemoryCheckinsRepository } from "@/repositories/in-memory/in-memory-checkins.repository";
 import { FetchMemberCheckInsHistoryUseCase } from "./fetch-member-check-ins-history";
 
-describe("Check In Use Case", () => {
+describe("Fetch Member Check-ins History UseCase", () => {
   let repository: CheckInsRepository;
-  // let gymsRepository: GymsRepository;
   let sut: FetchMemberCheckInsHistoryUseCase;
-  // let gym: Gym;
 
   beforeEach(async () => {
     repository = new InMemoryCheckinsRepository();
