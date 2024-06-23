@@ -74,13 +74,13 @@ export class InMemoryCheckinsRepository implements CheckInsRepository {
     return checkIn;
   }
 
-  async save(checkIn: Checkin): Promise<Checkin> {
-    const index = this.items.findIndex((item) => item.id === checkIn.id);
+  async save(data: Checkin): Promise<Checkin> {
+    const index = this.items.findIndex((item) => item.id === data.id);
 
     if (index >= 0) {
-      this.items[index] = checkIn;
+      this.items[index] = data;
     }
 
-    return checkIn;
+    return data;
   }
 }
