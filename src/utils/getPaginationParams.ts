@@ -1,4 +1,4 @@
-const MAX_ITEMS_PER_PAGE = 20;
+export const MAX_ITEMS_PER_PAGE = 20;
 
 /**
  * Get the start and end index for pagination

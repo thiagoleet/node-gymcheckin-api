@@ -1,10 +1,11 @@
 import { Checkin, Prisma } from "@prisma/client";
 import { CheckInsRepository } from "../checkins.repository";
 import { prisma } from "@/lib/prisma";
-import { getPaginationParams } from "@/utils/getPaginationParams";
+import {
+  MAX_ITEMS_PER_PAGE,
+  getPaginationParams,
+} from "@/utils/getPaginationParams";
 import dayjs from "dayjs";
-
-const ITEMS_PER_PAGE = 20;
 
 export class PrismaCheckInsRepository implements CheckInsRepository {
   async countByUserId(userId: string): Promise<number> {
@@ -44,14 +45,14 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
   }
 
   async findManyByUserId(userId: string, page: number): Promise<Checkin[]> {
-    const [start] = getPaginationParams(page);
+    const [skip] = getPaginationParams(page);
 
     const checkins = await prisma.checkin.findMany({
       where: {
         user_id: userId,
       },
-      take: ITEMS_PER_PAGE,
-      skip: start,
+      take: MAX_ITEMS_PER_PAGE,
+      skip,
     });
 
     return checkins;
