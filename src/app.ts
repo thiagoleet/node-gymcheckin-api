@@ -7,6 +7,7 @@ export const app = fastify();
 
 app.register(appRoutes, { prefix: "api" });
 
+// Error handling
 app.setErrorHandler((error, _, reply) => {
   if (env.NODE_ENV !== "prod") {
     console.error(error);
