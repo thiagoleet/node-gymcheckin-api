@@ -33,7 +33,7 @@ describe("Search Gyms Use Case", () => {
 
     const { gyms } = await sut.execute({ query: "Javascript", page: 1 });
 
-    expect(gyms.length).toBe(1);
+    expect(gyms).toHaveLength(1);
     expect(gyms).toEqual([expect.objectContaining({ id: "gym-01" })]);
   });
 
@@ -51,7 +51,7 @@ describe("Search Gyms Use Case", () => {
 
     const { gyms } = await sut.execute({ query: "Javascript", page: 2 });
 
-    expect(gyms.length).toBe(4);
+    expect(gyms).toHaveLength(4);
     expect(gyms).toEqual([
       expect.objectContaining({ id: "gym-21" }),
       expect.objectContaining({ id: "gym-22" }),
