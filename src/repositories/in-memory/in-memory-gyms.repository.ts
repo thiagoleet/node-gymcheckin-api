@@ -1,6 +1,7 @@
 import { Gym, Prisma } from "@prisma/client";
 import { randomUUID } from "node:crypto";
 import { GymsRepository } from "../gyms.repository";
+import { getPaginationParams } from "@/utils/getPaginationParams";
 
 export class InMemoryGymsRepository implements GymsRepository {
   private items: Gym[];
@@ -28,5 +29,11 @@ export class InMemoryGymsRepository implements GymsRepository {
     this.items.push(gym);
 
     return gym;
+  }
+
+  async searchMany(query: string, page: number): Promise<Gym[]> {
+    return this.items
+      .filter((gym) => gym.title.includes(query))
+      .slice(...getPaginationParams(page));
   }
 }

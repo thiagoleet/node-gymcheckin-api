@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { randomUUID } from "node:crypto";
 import { CheckInsRepository } from "../checkins.repository";
 import { MaxNumberOfCheckInsError } from "@/errors";
+import { getPaginationParams } from "@/utils/getPaginationParams";
 
 export class InMemoryCheckinsRepository implements CheckInsRepository {
   private items: Checkin[];
@@ -56,7 +57,7 @@ export class InMemoryCheckinsRepository implements CheckInsRepository {
   async findManyByUserId(userId: string, page: number): Promise<Checkin[]> {
     return this.items
       .filter((checkin) => checkin.user_id === userId)
-      .slice((page - 1) * 20, page * 20);
+      .slice(...getPaginationParams(page));
   }
 
   async countByUserId(userId: string): Promise<number> {
