@@ -26,3 +26,12 @@ export async function authenticateUser(app: FastifyInstance) {
 
   return response;
 }
+
+export async function getUserProfile(app: FastifyInstance, token: string) {
+  const response = await request(app.server)
+    .get("/api/me")
+    .set("Authorization", `Bearer ${token}`)
+    .send();
+
+  return response;
+}
