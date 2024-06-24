@@ -10,5 +10,5 @@ app
     port: APP_PORT,
   })
   .then(() => {
-    console.log("🚀 HTTP server running");
+    console.log(`🚀 HTTP server running in ${APP_HOST}:${APP_PORT}`);
   });
