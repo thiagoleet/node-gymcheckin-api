@@ -19,14 +19,7 @@ export async function authenticate(
 
     const { user } = await authenticateUseCase.execute({ email, password });
 
-    const token = await reply.jwtSign(
-      {},
-      {
-        sign: {
-          sub: user.id,
-        },
-      }
-    );
+    const token = await getToken(reply, user);
 
     return reply.status(200).send({ message: "User authenticated", token });
   } catch (err) {
@@ -36,4 +29,17 @@ export async function authenticate(
 
     throw err;
   }
+}
+
+async function getToken(reply: FastifyReply, user: { id: string }) {
+  const token = await reply.jwtSign(
+    {},
+    {
+      sign: {
+        sub: user.id,
+      },
+    }
+  );
+
+  return token;
 }
