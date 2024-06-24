@@ -1,12 +1,19 @@
 import fastify from "fastify";
-import { appRoutes } from "./http/routes";
+import fastifyJwt from "@fastify/jwt";
 import { ZodError } from "zod";
 import { env } from "@/env";
+import { appRoutes } from "./http/routes";
 
 export const app = fastify();
 
+// JWT
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+});
+
 app.register(appRoutes, { prefix: "api" });
 
+// Error handling
 app.setErrorHandler((error, _, reply) => {
   if (env.NODE_ENV !== "prod") {
     console.error(error);
