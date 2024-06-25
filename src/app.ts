@@ -13,7 +13,7 @@ app.register(fastifyJwt, {
 });
 
 app.register(usersRoutes, { prefix: "api" });
-app.register(gymsRoutes, { prefix: "api" });
+app.register(gymsRoutes, { prefix: "api/gyms" });
 
 // Error handling
 app.setErrorHandler((error, _, reply) => {
