@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 import { env } from "@/env";
 import { usersRoutes } from "./http/modules/users/routes";
 import { gymsRoutes } from "./http/modules/gyms/routes";
+import { checkInsRoutes } from "./http/modules/checkins/routes";
 
 export const app = fastify();
 
@@ -14,6 +15,7 @@ app.register(fastifyJwt, {
 
 app.register(usersRoutes, { prefix: "api" });
 app.register(gymsRoutes, { prefix: "api/gyms" });
+app.register(checkInsRoutes, { prefix: "api/checkins" });
 
 // Error handling
 app.setErrorHandler((error, _, reply) => {
