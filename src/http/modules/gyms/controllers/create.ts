@@ -1,4 +1,5 @@
 import { makeCreateGymsUseCase } from "@/factories/make-create-gym-use-case";
+import { validLatiude, validLongitude } from "@/utils/validCoordinates";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
@@ -25,12 +26,4 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   });
 
   return reply.status(201).send({ message: "Gym created", gym });
-}
-
-function validLatiude(value: number) {
-  return Math.abs(value) >= -90 && Math.abs(value) <= 90;
-}
-
-function validLongitude(value: number) {
-  return Math.abs(value) >= -180 && Math.abs(value) <= 180;
 }
