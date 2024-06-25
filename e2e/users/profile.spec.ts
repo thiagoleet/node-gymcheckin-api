@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { app } from "@/app";
-import { authenticateUser, createUser, getUserProfile } from "../utils/users";
+import { createAndAuthenticateUser, getUserProfile } from "../utils/users";
 
 describe("[E2E] Profile", () => {
   beforeAll(async () => {
@@ -11,9 +11,7 @@ describe("[E2E] Profile", () => {
   });
 
   it("should be able to get user profile", async () => {
-    await createUser(app);
-
-    const authResponse = await authenticateUser(app);
+    const authResponse = await createAndAuthenticateUser(app);
     const { token } = authResponse.body;
     const response = await getUserProfile(app, token);
 

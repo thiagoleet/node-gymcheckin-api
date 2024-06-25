@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { app } from "@/app";
-import { authenticateUser, createUser } from "../utils/users";
+import { createAndAuthenticateUser } from "../utils/users";
 
 describe("[E2E] Authenticate", () => {
   beforeAll(async () => {
@@ -11,9 +11,7 @@ describe("[E2E] Authenticate", () => {
   });
 
   it("should be able to authenticate", async () => {
-    await createUser(app);
-
-    const response = await authenticateUser(app);
+    const response = await createAndAuthenticateUser(app);
 
     expect(response.status).toEqual(200);
     expect(response.body).toEqual(
