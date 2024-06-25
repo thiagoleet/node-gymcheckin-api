@@ -42,6 +42,21 @@ export async function authenticateUser(app: FastifyInstance) {
 }
 
 /**
+ * Create and authenticate a user for testing
+ *
+ * @export
+ * @param {FastifyInstance} app
+ * @return {*}
+ */
+export async function createAndAuthenticateUser(app: FastifyInstance) {
+  await createUser(app);
+
+  const response = await authenticateUser(app);
+
+  return response;
+}
+
+/**
  * Get the user profile (testing only)
  *
  * @export

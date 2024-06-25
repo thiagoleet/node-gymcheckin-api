@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { app } from "@/app";
-import { authenticateUser, createUser, getUserProfile } from "../utils";
+import { authenticateUser, createUser, getUserProfile } from "../utils/users";
 
 describe("[E2E] Profile", () => {
   beforeAll(async () => {
