@@ -1,4 +1,3 @@
-import { Gym } from "@prisma/client";
 import { FastifyInstance } from "fastify";
 import request from "supertest";
 
