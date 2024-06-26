@@ -4,9 +4,9 @@ import { FastifyReply, FastifyRequest } from "fastify";
 export async function profile(request: FastifyRequest, reply: FastifyReply) {
   const { sub } = request.user;
 
-  const getUserProfile = makeGetUserProfileUseCase();
+  const useCase = makeGetUserProfileUseCase();
 
-  const { user } = await getUserProfile.execute({ userId: sub });
+  const { user } = await useCase.execute({ userId: sub });
 
   // TODO: Prepare a response type
   return reply.status(200).send({
