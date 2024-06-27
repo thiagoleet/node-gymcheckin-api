@@ -2,11 +2,13 @@ import { FastifyReply } from "fastify";
 
 export async function createToken(
   reply: FastifyReply,
-  user: { id: string },
+  user: { id: string; role: "ADMIN" | "MEMBER" },
   isRefreshToken: boolean = false
 ) {
   const token = await reply.jwtSign(
-    {},
+    {
+      role: user.role,
+    },
     {
       sign: {
         sub: user.id,
