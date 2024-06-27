@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { InvalidCredentialsError } from "@/errors";
 import { makeAuthenticateUseCase } from "@/factories/make-authenticate-use-case";
+import { createToken } from "../utils";
 
 export async function authenticate(
   request: FastifyRequest,
@@ -19,8 +20,8 @@ export async function authenticate(
 
     const { user } = await useCase.execute({ email, password });
 
-    const token = await getToken(reply, user);
-    const refreshToken = await getToken(reply, user, true);
+    const token = await createToken(reply, user);
+    const refreshToken = await createToken(reply, user, true);
 
     return reply
       .setCookie("refreshToken", refreshToken, {
@@ -38,22 +39,4 @@ export async function authenticate(
 
     throw err;
   }
-}
-
-async function getToken(
-  reply: FastifyReply,
-  user: { id: string },
-  refreshToken: boolean = false
-) {
-  const token = await reply.jwtSign(
-    {},
-    {
-      sign: {
-        sub: user.id,
-        expiresIn: refreshToken ? "7d" : "10m",
-      },
-    }
-  );
-
-  return token;
 }
