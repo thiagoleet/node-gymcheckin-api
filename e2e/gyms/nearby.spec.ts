@@ -13,7 +13,7 @@ describe("[E2E] Nearby Gym", () => {
   });
 
   it("should be able to list nearby gyms", async () => {
-    const authResponse = await createAndAuthenticateUser(app);
+    const authResponse = await createAndAuthenticateUser(app, true);
     const { token } = authResponse.body;
     const latitude = -23.5913537;
     const longitude = -46.6620717;

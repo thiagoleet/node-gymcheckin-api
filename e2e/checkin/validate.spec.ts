@@ -14,7 +14,7 @@ describe("[E2E] Validate Check-in", () => {
   });
 
   it("should be able to validate a check-in", async () => {
-    const authResponse = await createAndAuthenticateUser(app);
+    const authResponse = await createAndAuthenticateUser(app, true);
     const { token } = authResponse.body;
     const checkInResponse = await createCheckin(app, token);
     const { checkIn } = checkInResponse.body;

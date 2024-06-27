@@ -3,6 +3,7 @@ import {
   register,
   authenticate,
   profile,
+  refresh,
 } from "@/http/modules/users/controllers";
 import { verifyJwt } from "@/http/middlewares";
 
@@ -18,4 +19,6 @@ export async function usersRoutes(app: FastifyInstance) {
     },
     profile
   );
+
+  app.patch("/token/refresh", refresh);
 }
