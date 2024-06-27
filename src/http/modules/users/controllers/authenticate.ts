@@ -20,8 +20,17 @@ export async function authenticate(
     const { user } = await useCase.execute({ email, password });
 
     const token = await getToken(reply, user);
+    const refreshToken = await getToken(reply, user, true);
 
-    return reply.status(200).send({ message: "User authenticated", token });
+    return reply
+      .setCookie("refreshToken", refreshToken, {
+        path: "/",
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .send({ message: "User authenticated", token });
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return reply.status(401).send({ message: err.message });
@@ -31,12 +40,17 @@ export async function authenticate(
   }
 }
 
-async function getToken(reply: FastifyReply, user: { id: string }) {
+async function getToken(
+  reply: FastifyReply,
+  user: { id: string },
+  refreshToken: boolean = false
+) {
   const token = await reply.jwtSign(
     {},
     {
       sign: {
         sub: user.id,
+        expiresIn: refreshToken ? "7d" : "10m",
       },
     }
   );
